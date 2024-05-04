@@ -1,0 +1,64 @@
+<div class="p-4">
+  @if(abnormal.length > 0){
+  <!-- stop emrgency button -->
+  <div class="my-2">
+    <button
+      class="bg-red-500 text-white px-4 py-2 rounded-lg w-full"
+      (click)="stopAlert()"
+    >
+      Sound
+    </button>
+  </div>
+
+  } @for(patient of abnormal; track patient){
+  <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50" role="alert">
+    <span class="font-medium">Emergency !</span> {{ patient.name }} has abnormal
+    vitals. Please take necessary actions.
+  </div>
+  }
+  <h1 class="text-3xl font-bold">Patient Details</h1>
+  <!-- todays date -->
+  <p class="text-gray-500 ml-1">{{ date.toDateString() }}</p>
+
+  <div class="mt-4">
+    @for (patient of patients; track patient) {
+    <div
+      class="bg-white rounded-lg p-4 mb-4 border"
+      [ngClass]="{
+        'shadow-md bg-red-200 border-2 border-red-500':
+          patient.status === 'ABNORMAL',
+        'border-2 border-green-500': patient.status === 'NORMAL'
+      }"
+    >
+      <h1
+        class="text-xl font-bold cursor-pointer"
+        (click)="redirectToHistoryPage(patient.device_id)"
+      >
+        {{ patient.name }} {{ patient.device_id }}
+      </h1>
+      <p class="text-gray-500">
+        updated on {{ patient.date }} at {{ patient.time }}
+      </p>
+      <div class="mt-2 grid grid-cols-2 gap-4">
+        <div>
+          <p class="text-lg text-gray-800 font-semibold">Temperature:</p>
+          <p class="text-gray-600">{{ patient.temperature }} C</p>
+        </div>
+        <div>
+          <p class="text-lg text-gray-800 font-semibold">Heart Rate:</p>
+          <p class="text-gray-600">{{ patient.heart_rate }} BPM</p>
+        </div>
+        <div>
+          <p class="text-lg text-gray-800 font-semibold">SpO2:</p>
+          <p class="text-gray-600">{{ patient.spo2 }} SP</p>
+        </div>
+        <div>
+          <p class="text-lg text-gray-800 font-semibold">ECG:</p>
+          <p class="text-gray-600">{{ patient.ecg }} ECG</p>
+        </div>
+      </div>
+    </div>
+    } @empty { Empty list of users }
+  </div>
+  <audio id="audio-alert"></audio>
+</div>

@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "proj-heart-disease"
+  },
+  "targets": {
+    "proj-heart-disease": {
+      "hosting": {
+        "proj-heart-pwa": [
+          "proj-heart-disease"
+        ]
+      }
+    }
+  }
+}
